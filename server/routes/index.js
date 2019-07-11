@@ -28,6 +28,20 @@ router.get("/api/auth/signout", authController.signout);
  */
 router.param("userId", userController.getUserById);
 
+router.put(
+    "/api/users/follow",
+    authController.checkAuth,
+    catchErrors(userController.addFollowing),
+    catchErrors(userController.addFollower)
+);
+
+router.put(
+    "/api/users/unfollow",
+    authController.checkAuth,
+    catchErrors(userController.deleteFollowing),
+    catchErrors(userController.deleteFollower)
+);
+
 router
   .route("/api/users/:userId")
   .get(userController.getAuthUser)
@@ -38,6 +52,8 @@ router
     catchErrors(userController.updateUser)
   )
   .delete(authController.checkAuth, catchErrors(userController.deleteUser));
+
+
 
 router.get("/api/users", userController.getUsers);
 router.get(
@@ -50,18 +66,7 @@ router.get(
   catchErrors(userController.getUserFeed)
 );
 
-router.put(
-  "/api/users/follow",
-  authController.checkAuth,
-  catchErrors(userController.addFollowing),
-  catchErrors(userController.addFollower)
-);
-router.put(
-  "/api/users/unfollow",
-  authController.checkAuth,
-  catchErrors(userController.deleteFollowing),
-  catchErrors(userController.deleteFollower)
-);
+
 
 /**
  * POST ROUTES: /api/posts
@@ -73,6 +78,7 @@ router.put(
   authController.checkAuth,
   catchErrors(postController.toggleLike)
 );
+
 router.put(
   "/api/posts/unlike",
   authController.checkAuth,
@@ -84,6 +90,7 @@ router.put(
   authController.checkAuth,
   catchErrors(postController.toggleComment)
 );
+
 router.put(
   "/api/posts/uncomment",
   authController.checkAuth,
