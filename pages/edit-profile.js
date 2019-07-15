@@ -16,6 +16,7 @@
 // import FaceTwoTone from "@material-ui/icons/FaceTwoTone";
 // import EditSharp from "@material-ui/icons/EditSharp";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {authInitialProps} from "../lib/auth";
 
 class EditProfile extends React.Component {
   state = {};
@@ -82,5 +83,7 @@ const styles = theme => ({
     display: "none"
   }
 });
+
+EditProfile.getInitialProps = authInitialProps(true);
 
 export default withStyles(styles)(EditProfile);
